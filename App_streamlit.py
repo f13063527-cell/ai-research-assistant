@@ -271,7 +271,7 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
 # VIEWS
 # ======================================================
 if st.session_state.current_view == "📝 Research Analyzer":
-    st.markdown('<h1>🔬 <span class="gradient-title">Research Paper Analyzer</span></h1>', unsafe_allow_html=True)
+    st.title("📝 Research Paper Analyzer")
     st.markdown("Transform long operational papers into production workflows instantly.")
 
     tab1, tab2 = st.tabs(["📄 Document Processing Engine", "✍️ Raw Text Core Field"])
