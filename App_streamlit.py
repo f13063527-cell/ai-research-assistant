@@ -35,23 +35,30 @@ st.markdown("""
     }
     
     h1 {
-    font-weight: 700 !important;
-    letter-spacing: -0.025em !important;
-    color: #FFFFFF !important; /* Safe fallback color for emojis */
-    margin-bottom: 20px !important;
-}
+        font-weight: 700 !important;
+        letter-spacing: -0.025em !important;
+        color: #FFFFFF !important; 
+        margin-bottom: 20px !important;
+    }
 
-/* New class strictly for the text, avoiding the emoji */
-.gradient-title {
-    background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-}
+    .gradient-title {
+        background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
     
+    /* 🛰️ FIXED SIDEBAR BACKGROUND */
     [data-testid="stSidebar"] { 
         background-color: #0F172A !important; 
         border-right: 1px solid #1E293B !important; 
+    }
+
+    /* ✨ FIX 1: FORCE SIDEBAR TEXT TO BE BRIGHT WHITE */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span, 
+    [data-testid="stSidebar"] label {
+        color: #F3F4F6 !important;
     }
     
     .report-card {
@@ -126,10 +133,19 @@ st.markdown("""
         border-radius: 10px !important;
     }
     
-    [data-testid="stFileUploaderDropzone"] div div span:last-child,
-    [data-testid="stFileUploaderDropzone"] div div div:last-child,
-    [data-testid="stFileUploaderDropzone"] small {
-        display: none !important;
+    /* ✨ FIX 2: CONVERT THE WHITE FILE UPLOADER INTO PREMIUM GLASSMORPHISM DARK */
+    [data-testid="stFileUploaderDropzone"] {
+        background: rgba(15, 23, 42, 0.65) !important;
+        backdrop-filter: blur(10px);
+        border: 1px dashed rgba(56, 189, 248, 0.3) !important;
+        border-radius: 12px !important;
+    }
+
+    /* ✨ FIX 3: RESTORE THE TEXT INSIDE THE DROPZONE AND MAKE IT LIGHT GRAY */
+    [data-testid="stFileUploaderDropzone"] div div span,
+    [data-testid="stFileUploaderDropzone"] div div div,
+    [data-testid="stFileUploaderDropzone"] label {
+        color: #9CA3AF !important;
     }
     </style>
 """, unsafe_allow_html=True)
