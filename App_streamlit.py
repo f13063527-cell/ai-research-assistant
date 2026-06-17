@@ -20,7 +20,7 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 🌌 PREMIUM BACKGROUND IMAGE */
+    /* 🌌 RESTORES THE DEEP, RICH BACKGROUND IMAGE EXACTLY LIKE THE ORIGINAL SCREEN */
     .stApp {
         background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvLDUoZgjxFBHoJD3mqZ8HdUDFwEQeXoVKeA&s") !important;
         background-size: cover !important;
@@ -28,16 +28,16 @@ st.markdown("""
         background-attachment: fixed !important;
     }
     
-    /* 🌓 DYNAMIC THEME OVERLAY: Smoothly tints the background image for light/dark mode readability */
+    /* 🌓 DYNAMIC THEME OVERLAY: Tints the background sheet beautifully for light/dark mode readability */
     [data-testid="stAppViewContainer"] {
-        background-color: color-mix(in srgb, var(--background-color) 85%, transparent) !important;
+        background-color: color-mix(in srgb, var(--background-color) 82%, transparent) !important;
     }
     
     h1, h2, h3, h4, h5, h6, p, label { 
         font-family: 'Inter', sans-serif !important; 
     }
     
-    /* FIX FOR TITLE SPECIFICITY */
+    /* 🔬 FIX: FORCES TITLE VISIBILITY BY DEFEATING STREAMLIT'S GLOBAL OVERRIDES */
     [data-testid="stAppViewContainer"] h1 {
         font-weight: 700 !important;
         letter-spacing: -0.025em !important;
@@ -45,7 +45,7 @@ st.markdown("""
         color: var(--text-color) !important;
     }
 
-    /* ✨ FIX 2: TEXT GRADIENT THAT SHOWS UP PERFECTLY IN BOTH THEMES */
+    /* TEXT GRADIENT LAYER: Completely responsive across light/dark environments */
     h1 span.gradient-title {
         background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
         -webkit-background-clip: text !important;
@@ -54,13 +54,13 @@ st.markdown("""
         display: inline-block !important;
     }
     
-    /* 🛰️ SIDEBAR BACKGROUND */
+    /* 🛰️ SIDEBAR BACKGROUND STRUCTURE */
     [data-testid="stSidebar"] { 
         background-color: var(--secondary-background-color) !important; 
         border-right: 1px solid rgba(148, 163, 184, 0.1) !important; 
     }
 
-    /* SIDEBAR TEXT INHERITANCE */
+    /* SIDEBAR TEXT INHERITANCE: Switches smoothly from White to Black based on system theme */
     [data-testid="stSidebar"] p, 
     [data-testid="stSidebar"] span, 
     [data-testid="stSidebar"] label,
@@ -68,16 +68,16 @@ st.markdown("""
         color: var(--text-color) !important;
     }
     
-    /* 💎 FIXED GLASSMORPHISM CARDS USING color-mix() */
+    /* GLASSMORPHISM CARDS: Adapts clean background tones using theme variables */
     .report-card {
-        background: color-mix(in srgb, var(--background-color) 70%, transparent) !important;
+        background: color-mix(in srgb, var(--background-color) 75%, transparent) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
         border-radius: 16px;
         border: 1px solid rgba(148, 163, 184, 0.2);
         color: var(--text-color) !important;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
         line-height: 1.8;
     }
     
@@ -96,9 +96,9 @@ st.markdown("""
     
     .flow-step-container {
         background: color-mix(in srgb, var(--secondary-background-color) 80%, transparent) !important;
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        border: 1px solid rgba(56, 189, 248, 0.25);
         border-radius: 14px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease, border-color 0.2s ease;
         margin: 0 auto;
         max-width: 900px;
@@ -106,7 +106,7 @@ st.markdown("""
     }
     
     .flow-step-container:hover {
-        border-color: rgba(56, 189, 248, 0.6);
+        border-color: rgba(56, 189, 248, 0.5);
         transform: translateY(-2px);
     }
     
@@ -123,7 +123,7 @@ st.markdown("""
     
     .flow-step-body {
         color: var(--text-color);
-        opacity: 0.9;
+        opacity: 0.85;
         padding: 24px;
         font-size: 16px;
         line-height: 1.6;
@@ -142,9 +142,9 @@ st.markdown("""
         border-radius: 10px !important;
     }
     
-    /* DRAG & DROP BOX CONTAINER */
+    /* 📥 UPLOADER BOX STYLING */
     [data-testid="stFileUploaderDropzone"] {
-        background: color-mix(in srgb, var(--secondary-background-color) 60%, transparent) !important;
+        background: color-mix(in srgb, var(--secondary-background-color) 70%, transparent) !important;
         border: 1px dashed rgba(56, 189, 248, 0.4) !important;
         border-radius: 12px !important;
     }
@@ -155,7 +155,7 @@ st.markdown("""
         color: var(--text-color) !important;
     }
 
-    /* ✨ FIX 3: COMPLETELY HIDE THE NEW DEFAULT STREAMLIT 200MB SPECIFICATION LABEL */
+    /* ✨ FIX: COMPLETELY BLOCKS THE DEFAULT "200MB PER FILE" LOGO TEXT FROM INTERFERING WITH THE LAYOUT */
     [data-testid="stFileUploaderInstruction"] {
         display: none !important;
     }
@@ -413,131 +413,74 @@ if st.session_state.current_view == "📝 Research Analyzer":
 
 
 elif st.session_state.current_view == "🤖 AI Chat Agent":
-
     st.title("🤖 AI Research Assistant")
 
     if not st.session_state.summary:
         st.warning("Please analyze a document first")
-
     else:
-
         st.caption("Context: Active Paper")
 
-        # Initialize session state
         if "messages" not in st.session_state:
             st.session_state.messages = []
 
         if "scroll_to_bottom" not in st.session_state:
             st.session_state.scroll_to_bottom = False
 
-        # Display chat history
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        # Smooth auto-scroll
         if st.session_state.scroll_to_bottom:
-
             st.components.v1.html(
                 """
                 <script>
                 setTimeout(() => {
-
-                    const mainSection =
-                        window.parent.document.querySelector("section.stMain");
-
+                    const mainSection = window.parent.document.querySelector("section.stMain");
                     if (mainSection) {
-
                         const start = mainSection.scrollTop;
                         const end = mainSection.scrollHeight;
                         const duration = 1500;
-
                         let startTime = null;
-
                         function animateScroll(timestamp) {
-
-                            if (!startTime) {
-                                startTime = timestamp;
-                            }
-
-                            const progress = Math.min(
-                                (timestamp - startTime) / duration,
-                                1
-                            );
-
-                            mainSection.scrollTop =
-                                start + (end - start) * progress;
-
+                            if (!startTime) startTime = timestamp;
+                            const progress = Math.min((timestamp - startTime) / duration, 1);
+                            mainSection.scrollTop = start + (end - start) * progress;
                             if (progress < 1) {
                                 requestAnimationFrame(animateScroll);
                             }
                         }
-
                         requestAnimationFrame(animateScroll);
                     }
-
                 }, 500);
                 </script>
                 """,
                 height=0
             )
-
             st.session_state.scroll_to_bottom = False
 
-        # Chat input
         prompt = st.chat_input("Ask a follow-up question...")
 
         if prompt:
-
-            # Save user message
-            st.session_state.messages.append(
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            )
-
+            st.session_state.messages.append({"role": "user", "content": prompt})
             try:
-
-                response = requests.post(
-                    f"{BACKEND_URL}/chat-with-paper",
-                    data={"question": prompt},
-                    timeout=300
-                )
-
+                response = requests.post(f"{BACKEND_URL}/chat-with-paper", data={"question": prompt}, timeout=300)
                 raw_data = response.json()
 
                 if isinstance(raw_data, dict):
-
                     if "answer" in raw_data:
                         answer = raw_data["answer"]
-
                     elif "error" in raw_data:
                         answer = f"⚠️ {raw_data['error']}"
-
                     else:
                         answer = "Unexpected response received from server."
-
                 else:
                     answer = "Invalid response received from server."
-
             except Exception as e:
-
                 answer = f"Connection error: {str(e)}"
 
-            # Save assistant response
-            st.session_state.messages.append(
-                {
-                    "role": "assistant",
-                    "content": answer
-                }
-            )
-
+            st.session_state.messages.append({"role": "assistant", "content": answer})
             st.session_state.scroll_to_bottom = True
-
             st.rerun()
-
-    
 
 
 elif st.session_state.current_view == "📑 PDF Section Extractor":
@@ -551,9 +494,7 @@ elif st.session_state.current_view == "📑 PDF Section Extractor":
             st.write("")
             st.markdown(f"### 📄 Extracted Section: {st.session_state.selected_section_name}")
             
-            # Create two columns to show raw text and an educational explanation layout side-by-side
             col_raw, col_exp = st.columns(2)
-            
             with col_raw:
                 st.subheader("📝 Raw Academic Text")
                 st.markdown(f'<div class="report-card" style="white-space: pre-wrap; height: 400px; overflow-y: auto; font-size: 14px;">{st.session_state.selected_section_text}</div>', unsafe_allow_html=True)
@@ -568,7 +509,6 @@ elif st.session_state.current_view == "📑 PDF Section Extractor":
                 """)
         else:
             st.info("ℹ️ Select a target section from the sidebar dropdown options and click **Extract Section** to display its text payload here.")
-
 
 
 elif st.session_state.current_view == "📊 Research Flow Diagram":
@@ -586,10 +526,8 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
             else:
                 with st.spinner("Extracting unique research process milestones from your document..."):
                     try:
-                        # Fetch custom dynamic steps parsed by the LLM model for this specific PDF
                         response = requests.post(f"{BACKEND_URL}/generate-flowchart")
                         raw_data = response.json()
-                        
                         if "error" in raw_data:
                             st.error(raw_data["error"])
                         else:
@@ -602,7 +540,6 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
         st.write("")
         st.write("")
         
-        # Display the compact generated chart image if available
         if st.session_state.flowchart_bytes:
             c_img1, c_img2, c_img3 = st.columns([1, 2, 1])
             with c_img2:
@@ -610,7 +547,6 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
                 st.image(st.session_state.flowchart_bytes, use_container_width=True)
                 st.write("")
 
-        # Render custom dynamically-loaded milestone breakdown text blocks
         if st.session_state.analyzer_steps:
             st.markdown("<h4 style='text-align: center; color: #38BDF8; margin-bottom: 20px;'>Core Milestone Breakdown</h4>", unsafe_allow_html=True)
             for i, step in enumerate(st.session_state.analyzer_steps):
