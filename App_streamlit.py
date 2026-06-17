@@ -11,23 +11,23 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Premium Enterprise Glassmorphism UI Dark Theme Styling with Restored Background Image
+# Premium Enterprise Glassmorphism UI Theme Styling (Auto-Adapts to Light/Dark Mode)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     html, body, [data-testid="stAppViewContainer"] {
         font-family: 'Inter', sans-serif;
-        color: #F3F4F6;
     }
     
-    /* 🌌 RESTORED PREMIUM BACKGROUND IMAGE WITH CRISP DARK OVERLAY */
+    /* 🌌 PREMIUM BACKGROUND IMAGE THAT ADAPTS ITS OVERLAY TO THE THEME */
     .stApp {
-        background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+        background: linear-gradient(var(--text-color) 0%, var(--background-color) 100%),
                     url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvLDUoZgjxFBHoJD3mqZ8HdUDFwEQeXoVKeA&s");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
+        background-blend-mode: overlay; /* This blends your background image cleanly with light or dark mode */
     }
     
     h1, h2, h3, h4, h5, h6, p, label { 
@@ -35,34 +35,43 @@ st.markdown("""
     }
     
     h1 {
-    font-weight: 700 !important;
-    letter-spacing: -0.025em !important;
-    color: #FFFFFF !important; /* Safe fallback color for emojis */
-    margin-bottom: 20px !important;
-}
+        font-weight: 700 !important;
+        letter-spacing: -0.025em !important;
+        margin-bottom: 20px !important;
+    }
 
-/* New class strictly for the text, avoiding the emoji */
-.gradient-title {
-    background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-}
-    
-    [data-testid="stSidebar"] { 
-        background-color: #0F172A !important; 
-        border-right: 1px solid #1E293B !important; 
+    /* Text gradient that works beautifully against both white and black environments */
+    .gradient-title {
+        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
     }
     
+    /* 🛰️ SIDEBAR: Uses Streamlit's secondary background variable instead of a hardcoded dark blue */
+    [data-testid="stSidebar"] { 
+        background-color: var(--secondary-background-color) !important; 
+        border-right: 1px solid rgba(148, 163, 184, 0.1) !important; 
+    }
+
+    /* ✨ THE MASTER FIX FOR SIDEBAR TEXT: Automatically inherits Light (Black) or Dark (White) text colors */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span, 
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] div {
+        color: var(--text-color) !important;
+    }
+    
+    /* GLASSMORPHISM CARDS: Adapts border opacity and uses theme background colors */
     .report-card {
-        background: rgba(15, 23, 42, 0.65);
+        background: rgba(var(--background-color-rgb), 0.65);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
         border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #E5E7EB !important;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        color: var(--text-color) !important;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
         line-height: 1.8;
     }
     
@@ -80,10 +89,10 @@ st.markdown("""
     .report-card h3 { font-size: 19px !important; }
     
     .flow-step-container {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+        background: linear-gradient(135deg, rgba(var(--secondary-background-color-rgb), 0.7) 0%, rgba(var(--background-color-rgb), 0.85) 100%);
         border: 1px solid rgba(56, 189, 248, 0.2);
         border-radius: 14px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease, border-color 0.2s ease;
         margin: 0 auto;
         max-width: 900px;
@@ -107,29 +116,39 @@ st.markdown("""
     }
     
     .flow-step-body {
+        color: var(--text-color);
+        opacity: 0.8;
         padding: 24px;
-        color: #9CA3AF;
         font-size: 16px;
         line-height: 1.6;
     }
     
     div[data-baseweb="select"] > div {
-        background-color: #1E293B !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-        color: #FFFFFF !important;
+        background-color: var(--secondary-background-color) !important;
+        border-color: rgba(148, 163, 184, 0.2) !important;
+        color: var(--text-color) !important;
     }
     
     .stTextArea textarea {
-        background-color: #0F172A !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        color: #F3F4F6 !important;
+        background-color: var(--background-color) !important;
+        border: 1px solid rgba(148, 163, 184, 0.2) !important;
+        color: var(--text-color) !important;
         border-radius: 10px !important;
     }
     
-    [data-testid="stFileUploaderDropzone"] div div span:last-child,
-    [data-testid="stFileUploaderDropzone"] div div div:last-child,
+    /* ✨ DRAG & DROP BOX: Uses theme background variables so it matches light/dark seamlessly */
+    [data-testid="stFileUploaderDropzone"] {
+        background: var(--secondary-background-color) !important;
+        border: 1px dashed rgba(56, 189, 248, 0.4) !important;
+        border-radius: 12px !important;
+    }
+
+    /* ✨ RESTORED TEXT IN DROPZONE: Updates smoothly with the active theme */
+    [data-testid="stFileUploaderDropzone"] div div span,
+    [data-testid="stFileUploaderDropzone"] div div div,
+    [data-testid="stFileUploaderDropzone"] label,
     [data-testid="stFileUploaderDropzone"] small {
-        display: none !important;
+        color: var(--text-color) !important;
     }
     </style>
 """, unsafe_allow_html=True)
