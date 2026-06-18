@@ -150,7 +150,7 @@ st.markdown("""
         background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
         border: 1px dashed rgba(56, 189, 248, 0.6) !important;
-        border-radius: 20px !important;
+        border-radius: 10px !important;
         padding: 15px !important;
     }
 
@@ -167,8 +167,8 @@ st.markdown("""
         background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
         border: 1px dashed rgba(56, 189, 248, 0.6) !important;
-        border-radius: 10px !important;
-        padding: 15px !important;
+        border-radius: 20px !important;
+        padding: 25px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
