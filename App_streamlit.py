@@ -20,14 +20,14 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 🌌 PREMIUM BACKGROUND IMAGE THAT ADAPTS ITS OVERLAY TO THE THEME */
-    .stApp {
-        background: linear-gradient(var(--text-color) 0%, var(--background-color) 100%),
+    /* 🌌 PREMIUM BACKGROUND IMAGE ON MAIN AREA ONLY */
+    [data-testid="stMain"] {
+        background: linear-gradient(rgba(0, 0, 0, 0.4) 0%, var(--background-color) 100%),
                     url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvLDUoZgjxFBHoJD3mqZ8HdUDFwEQeXoVKeA&s");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        background-blend-mode: overlay; /* This blends your background image cleanly with light or dark mode */
+        background-blend-mode: normal; 
     }
     
     h1, h2, h3, h4, h5, h6, p, label { 
@@ -146,9 +146,13 @@ st.markdown("""
     /* ✨ RESTORED TEXT IN DROPZONE: Updates smoothly with the active theme */
     [data-testid="stFileUploaderDropzone"] div div span,
     [data-testid="stFileUploaderDropzone"] div div div,
-    [data-testid="stFileUploaderDropzone"] label,
-    [data-testid="stFileUploaderDropzone"] small {
+    [data-testid="stFileUploaderDropzone"] label {
         color: var(--text-color) !important;
+    }
+    
+    /* 🚫 HIDE THE 200MB UPLOAD LIMIT TEXT */
+    [data-testid="stFileUploaderDropzone"] small {
+        display: none !important;
     }
     </style>
 """, unsafe_allow_html=True)
