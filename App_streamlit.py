@@ -30,9 +30,12 @@ st.markdown("""
     }
 
     /* Keep outer container base neutral/transparent so main image functions correctly */
-    [data-testid="stAppViewContainer"] {
-        background: transparent !important;
-    }
+    /* 1. MAIN DASHBOARD BACKGROUND ONLY */
+[data-testid="stMain"],
+[data-testid="stAppViewContainer"] {
+    background: #F4F6F9 !important; /* Elegant light gray color */
+    background-image: none !important; /* Removes the dark background image link */
+}
 
     /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
     [data-testid="stSidebar"] {
