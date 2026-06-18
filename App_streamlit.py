@@ -20,37 +20,29 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 1. FORCE MAIN AREA BACKGROUND: Applies to the main app view */
-    /* MAIN DASHBOARD ONLY */
-    [data-testid="stAppViewContainer"]{
-        background:
-        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-        url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+    /* 1. APPLY BACKGROUND IMAGE TO MAIN DASHBOARD ONLY */
+    [data-testid="stMain"] {
+        background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
     }
 
-    [data-testid="stSidebar"]{
-        background: #07111F !important;
-        border-right:1px solid rgba(255,255,255,.08);
-    }
-
-    /* Keep main container transparent */
-    [data-testid="stMain"],
-    [data-testid="stAppViewBlockContainer"],
-    .block-container{
+    /* Keep outer container base neutral/transparent so main image functions correctly */
+    [data-testid="stAppViewContainer"] {
         background: transparent !important;
     }
 
-    /* Sidebar remains solid */
-    [data-testid="stSidebar"]{
-        background-color: var(--secondary-background-color) !important;
+    /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
+    [data-testid="stSidebar"] {
+        background-color: #07111F !important;
+        border-right: 1px solid rgba(255,255,255,.08) !important;
     }
 
-    /* 2. PIERCE THE INNER BLOCK: Forces Streamlit's inner content wrapper to be transparent */
-    [data-testid="stMain"] .block-container,
-    [data-testid="stAppViewBlockContainer"] {
+    /* Keep inner main container blocks transparent */
+    [data-testid="stAppViewBlockContainer"],
+    .block-container {
         background: transparent !important;
     }
     
@@ -72,12 +64,6 @@ st.markdown("""
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
         display: inline-block !important;
-    }
-    
-    /* 🛰️ SIDEBAR: Solid color, no background image */
-    [data-testid="stSidebar"] { 
-        background-color: var(--secondary-background-color) !important; 
-        border-right: 1px solid rgba(148, 163, 184, 0.1) !important; 
     }
 
     [data-testid="stSidebar"] p, 
@@ -159,28 +145,38 @@ st.markdown("""
         border-radius: 10px !important;
     }
     
-    [data-testid="stFileUploaderDropzone"]{
-        background:rgba(0,0,0,.45)!important;
-        backdrop-filter:blur(8px);
-        border:1px dashed rgba(56,189,248,.6)!important;
-        border-radius:20px!important;
-        min-height:80px;
+    /* 3. FILE UPLOAD DROPZONE CUSTOMIZATION */
+    [data-testid="stFileUploaderDropzone"] {
+        background: rgba(0,0,0,.45) !important;
+        backdrop-filter: blur(8px);
+        border: 1px dashed rgba(56,189,248,.6) !important;
+        border-radius: 20px !important;
+        min-height: 80px;
     }
 
-    [data-testid="stFileUploaderDropzone"] section,
-    [data-testid="stFileUploaderDropzone"] span,
-    [data-testid="stFileUploaderDropzone"] p,
-    [data-testid="stFileUploaderDropzone"] div{
-          color: #38BDF8 !important;   
+    /* Collapse default text block containing '200MB per file • PDF' */
+    [data-testid="stFileUploaderDropzone"] section {
+        font-size: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
 
-    
+    /* Retain size on internal action buttons */
+    [data-testid="stFileUploaderDropzone"] button * {
+        font-size: 14px !important;
+    }
 
-    /* center default drag-drop text */
-    [data-testid="stFileUploaderDropzone"] section{
-        display:flex;
-        justify-content:center;
-        align-items:center;
+    /* Append target replacement string safely alongside the selector framework */
+    [data-testid="stFileUploaderDropzone"] section::after {
+        content: "Drag and drop PDF file here" !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 16px !important;
+        color: #38BDF8 !important;
+        font-weight: 500 !important;
+        margin-left: 15px !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -436,131 +432,75 @@ if st.session_state.current_view == "📝 Research Analyzer":
 
 
 elif st.session_state.current_view == "🤖 AI Chat Agent":
-
     st.title("🤖 AI Research Assistant")
 
     if not st.session_state.summary:
         st.warning("Please analyze a document first")
-
     else:
-
         st.caption("Context: Active Paper")
 
-        # Initialize session state
         if "messages" not in st.session_state:
             st.session_state.messages = []
 
         if "scroll_to_bottom" not in st.session_state:
             st.session_state.scroll_to_bottom = False
 
-        # Display chat history
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        # Smooth auto-scroll
         if st.session_state.scroll_to_bottom:
-
             st.components.v1.html(
                 """
                 <script>
                 setTimeout(() => {
-
-                    const mainSection =
-                        window.parent.document.querySelector("section.stMain");
-
+                    const mainSection = window.parent.document.querySelector("section.stMain");
                     if (mainSection) {
-
                         const start = mainSection.scrollTop;
                         const end = mainSection.scrollHeight;
                         const duration = 1500;
-
                         let startTime = null;
-
                         function animateScroll(timestamp) {
-
-                            if (!startTime) {
-                                startTime = timestamp;
-                            }
-
-                            const progress = Math.min(
-                                (timestamp - startTime) / duration,
-                                1
-                            );
-
-                            mainSection.scrollTop =
-                                start + (end - start) * progress;
-
-                            if (progress < 1) {
-                                requestAnimationFrame(animateScroll);
-                            }
+                            if (!startTime) startTime = timestamp;
+                            const progress = Math.min((timestamp - startTime) / duration, 1);
+                            mainSection.scrollTop = start + (end - start) * progress;
+                            if (progress < 1) requestAnimationFrame(animateScroll);
                         }
-
                         requestAnimationFrame(animateScroll);
                     }
-
                 }, 500);
                 </script>
                 """,
                 height=0
             )
-
             st.session_state.scroll_to_bottom = False
 
-        # Chat input
         prompt = st.chat_input("Ask a follow-up question...")
 
         if prompt:
-
-            # Save user message
-            st.session_state.messages.append(
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            )
-
+            st.session_state.messages.append({"role": "user", "content": prompt})
             try:
-
                 response = requests.post(
                     f"{BACKEND_URL}/chat-with-paper",
                     data={"question": prompt},
                     timeout=300
                 )
-
                 raw_data = response.json()
-
                 if isinstance(raw_data, dict):
-
                     if "answer" in raw_data:
                         answer = raw_data["answer"]
-
                     elif "error" in raw_data:
                         answer = f"⚠️ {raw_data['error']}"
-
                     else:
                         answer = "Unexpected response received from server."
-
                 else:
                     answer = "Invalid response received from server."
-
             except Exception as e:
-
                 answer = f"Connection error: {str(e)}"
 
-            # Save assistant response
-            st.session_state.messages.append(
-                {
-                    "role": "assistant",
-                    "content": answer
-                }
-            )
-
+            st.session_state.messages.append({"role": "assistant", "content": answer})
             st.session_state.scroll_to_bottom = True
-
             st.rerun()
-
-    
 
 
 elif st.session_state.current_view == "📑 PDF Section Extractor":
@@ -574,7 +514,6 @@ elif st.session_state.current_view == "📑 PDF Section Extractor":
             st.write("")
             st.markdown(f"### 📄 Extracted Section: {st.session_state.selected_section_name}")
             
-            # Create two columns to show raw text and an educational explanation layout side-by-side
             col_raw, col_exp = st.columns(2)
             
             with col_raw:
@@ -593,7 +532,6 @@ elif st.session_state.current_view == "📑 PDF Section Extractor":
             st.info("ℹ️ Select a target section from the sidebar dropdown options and click **Extract Section** to display its text payload here.")
 
 
-
 elif st.session_state.current_view == "📊 Research Flow Diagram":
     st.title("📊 Research Flow Diagram")
     st.markdown("Generate an integrated structural workflow diagram with embedded step-by-step breakdowns.")
@@ -609,10 +547,8 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
             else:
                 with st.spinner("Extracting unique research process milestones from your document..."):
                     try:
-                        # Fetch custom dynamic steps parsed by the LLM model for this specific PDF
                         response = requests.post(f"{BACKEND_URL}/generate-flowchart")
                         raw_data = response.json()
-                        
                         if "error" in raw_data:
                             st.error(raw_data["error"])
                         else:
@@ -625,7 +561,6 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
         st.write("")
         st.write("")
         
-        # Display the compact generated chart image if available
         if st.session_state.flowchart_bytes:
             c_img1, c_img2, c_img3 = st.columns([1, 2, 1])
             with c_img2:
@@ -633,7 +568,6 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
                 st.image(st.session_state.flowchart_bytes, use_container_width=True)
                 st.write("")
 
-        # Render custom dynamically-loaded milestone breakdown text blocks
         if st.session_state.analyzer_steps:
             st.markdown("<h4 style='text-align: center; color: #38BDF8; margin-bottom: 20px;'>Core Milestone Breakdown</h4>", unsafe_allow_html=True)
             for i, step in enumerate(st.session_state.analyzer_steps):
