@@ -11,50 +11,75 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Premium Enterprise Glassmorphism UI Theme Styling (Auto-Adapts to Light/Dark Mode)
+# Premium Enterprise Glassmorphism UI Theme Styling
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
-    html, body, [data-testid="stAppViewContainer"] {
+    html, body {
         font-family: 'Inter', sans-serif;
     }
     
-    /* 🌌 PREMIUM BACKGROUND IMAGE ON MAIN AREA ONLY */
-    [data-testid="stMain"] {
-        background: linear-gradient(rgba(0, 0, 0, 0.4) 0%, var(--background-color) 100%),
-                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvLDUoZgjxFBHoJD3mqZ8HdUDFwEQeXoVKeA&s");
+    /* 1. FORCE MAIN AREA BACKGROUND: Applies to the main app view */
+    /* MAIN DASHBOARD ONLY */
+    [data-testid="stAppViewContainer"]{
+        background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10");
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
-        background-blend-mode: normal; 
+    }
+
+    [data-testid="stSidebar"]{
+        background: #07111F !important;
+        border-right:1px solid rgba(255,255,255,.08);
+    }
+
+    /* Keep main container transparent */
+    [data-testid="stMain"],
+    [data-testid="stAppViewBlockContainer"],
+    .block-container{
+        background: transparent !important;
+    }
+
+    /* Sidebar remains solid */
+    [data-testid="stSidebar"]{
+        background-color: var(--secondary-background-color) !important;
+    }
+
+    /* 2. PIERCE THE INNER BLOCK: Forces Streamlit's inner content wrapper to be transparent */
+    [data-testid="stMain"] .block-container,
+    [data-testid="stAppViewBlockContainer"] {
+        background: transparent !important;
     }
     
     h1, h2, h3, h4, h5, h6, p, label { 
         font-family: 'Inter', sans-serif !important; 
     }
     
-    h1 {
+    /* Title Fix */
+    [data-testid="stMain"] h1 {
         font-weight: 700 !important;
         letter-spacing: -0.025em !important;
         margin-bottom: 20px !important;
+        color: var(--text-color) !important;
     }
 
-    /* Text gradient that works beautifully against both white and black environments */
-    .gradient-title {
-        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
+    h1 span.gradient-title {
+        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        display: inline-block !important;
     }
     
-    /* 🛰️ SIDEBAR: Uses Streamlit's secondary background variable instead of a hardcoded dark blue */
+    /* 🛰️ SIDEBAR: Solid color, no background image */
     [data-testid="stSidebar"] { 
         background-color: var(--secondary-background-color) !important; 
         border-right: 1px solid rgba(148, 163, 184, 0.1) !important; 
     }
 
-    /* ✨ THE MASTER FIX FOR SIDEBAR TEXT: Automatically inherits Light (Black) or Dark (White) text colors */
     [data-testid="stSidebar"] p, 
     [data-testid="stSidebar"] span, 
     [data-testid="stSidebar"] label,
@@ -62,14 +87,14 @@ st.markdown("""
         color: var(--text-color) !important;
     }
     
-    /* GLASSMORPHISM CARDS: Adapts border opacity and uses theme background colors */
+    /* Glassmorphism Cards */
     .report-card {
-        background: rgba(var(--background-color-rgb), 0.65);
+        background: color-mix(in srgb, var(--background-color) 75%, transparent) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
         border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
+        border: 1px solid rgba(148, 163, 184, 0.2);
         color: var(--text-color) !important;
         box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
         line-height: 1.8;
@@ -89,8 +114,8 @@ st.markdown("""
     .report-card h3 { font-size: 19px !important; }
     
     .flow-step-container {
-        background: linear-gradient(135deg, rgba(var(--secondary-background-color-rgb), 0.7) 0%, rgba(var(--background-color-rgb), 0.85) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.2);
+        background: color-mix(in srgb, var(--secondary-background-color) 80%, transparent) !important;
+        border: 1px solid rgba(56, 189, 248, 0.25);
         border-radius: 14px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease, border-color 0.2s ease;
@@ -110,17 +135,15 @@ st.markdown("""
         padding: 16px 24px;
         font-size: 20px;
         font-weight: 600;
-        letter-spacing: -0.01em;
         border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         text-align: center;
     }
     
     .flow-step-body {
         color: var(--text-color);
-        opacity: 0.8;
+        opacity: 0.85;
         padding: 24px;
         font-size: 16px;
-        line-height: 1.6;
     }
     
     div[data-baseweb="select"] > div {
@@ -136,23 +159,28 @@ st.markdown("""
         border-radius: 10px !important;
     }
     
-    /* ✨ DRAG & DROP BOX: Uses theme background variables so it matches light/dark seamlessly */
-    [data-testid="stFileUploaderDropzone"] {
-        background: var(--secondary-background-color) !important;
-        border: 1px dashed rgba(56, 189, 248, 0.4) !important;
-        border-radius: 12px !important;
+    [data-testid="stFileUploaderDropzone"]{
+        background:rgba(0,0,0,.45)!important;
+        backdrop-filter:blur(8px);
+        border:1px dashed rgba(56,189,248,.6)!important;
+        border-radius:20px!important;
+        min-height:80px;
     }
 
-    /* ✨ RESTORED TEXT IN DROPZONE: Updates smoothly with the active theme */
-    [data-testid="stFileUploaderDropzone"] div div span,
-    [data-testid="stFileUploaderDropzone"] div div div,
-    [data-testid="stFileUploaderDropzone"] label {
-        color: var(--text-color) !important;
+    [data-testid="stFileUploaderDropzone"] section,
+    [data-testid="stFileUploaderDropzone"] span,
+    [data-testid="stFileUploaderDropzone"] p,
+    [data-testid="stFileUploaderDropzone"] div{
+          color: #38BDF8 !important;   
     }
+
     
-    /* 🚫 HIDE THE 200MB UPLOAD LIMIT TEXT */
-    [data-testid="stFileUploaderDropzone"] small {
-        display: none !important;
+
+    /* center default drag-drop text */
+    [data-testid="stFileUploaderDropzone"] section{
+        display:flex;
+        justify-content:center;
+        align-items:center;
     }
     </style>
 """, unsafe_allow_html=True)
