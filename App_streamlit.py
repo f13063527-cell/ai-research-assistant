@@ -150,7 +150,7 @@ st.markdown("""
         background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
         border: 1px dashed rgba(56, 189, 248, 0.6) !important;
-        border-radius: 10px !important;
+        border-radius: 20px !important;
         padding: 15px !important;
     }
 
@@ -162,41 +162,50 @@ st.markdown("""
         justify-content: center !important;
     }
 
-    /* 3. BULLETPROOF FILE UPLOADER OVERRIDE FOR STREAMLIT CLOUD */
+    /* 3. ULTRA-COMPACT SLIM FILE UPLOADER FOR STREAMLIT CLOUD */
     [data-testid="stFileUploaderDropzone"] {
         background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
         border: 1px dashed rgba(56, 189, 248, 0.6) !important;
-        border-radius: 20px !important;
-        padding: 25px !important;
+        border-radius: 12px !important;   /* Sleeker rounded corners for a thin box */
+        padding: 8px 20px !important;      /* Drastically reduced top/bottom padding */
+        min-height: 0px !important;        /* Overrides Streamlit's tall default height */
+        height: auto !important;
+        
+        /* Switch to horizontal alignment to save vertical space */
         display: flex !important;
-        flex-direction: column !important;
+        flex-direction: row !important;    
         align-items: center !important;
         justify-content: center !important;
     }
 
-    /* Step A: Make ALL default text strings (including the 200MB limit notice) completely invisible */
+    /* Hide default text strings and notices */
     [data-testid="stFileUploaderDropzone"] * {
         color: transparent !important;
         font-size: 0 !important;
     }
 
-    /* Step B: Explicitly protect and restore the "Browse files" button text size and visibility */
+    /* Restore and scale down the "Browse files" button */
+    [data-testid="stFileUploaderDropzone"] button {
+        margin: 0 !important;
+        padding: 4px 12px !important;      /* Makes the button slightly shorter */
+    }
     [data-testid="stFileUploaderDropzone"] button,
     [data-testid="stFileUploaderDropzone"] button * {
         color: #ffffff !important;
-        font-size: 14px !important;
+        font-size: 13px !important;        /* Slightly smaller text for a slim design */
     }
 
-    /* Step C: Securely inject your exact custom instruction string directly beneath the button */
+    /* Append your custom text cleanly directly next to the button */
     [data-testid="stFileUploaderDropzone"]::after {
         content: "Drag and drop PDF file here" !important;
         font-family: 'Inter', sans-serif !important;
-        font-size: 16px !important;
+        font-size: 14px !important;
         color: #38BDF8 !important;
         font-weight: 500 !important;
-        margin-top: 14px !important;
-        display: block !important;
+        margin-top: 0px !important;        /* Clears downward stacking push */
+        margin-left: 15px !important;      /* Pushes the text safely to the right of the button */
+        display: inline-block !important;
         visibility: visible !important;
     }
     </style>
