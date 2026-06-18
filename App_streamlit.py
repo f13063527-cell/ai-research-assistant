@@ -168,7 +168,7 @@ st.markdown("""
         backdrop-filter: blur(8px);
         border: 1px dashed rgba(56, 189, 248, 0.6) !important;
         border-radius: 10px !important;
-        padding: 25px !important;
+        padding: 15px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
