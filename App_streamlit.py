@@ -147,36 +147,51 @@ st.markdown("""
     
     /* 3. FILE UPLOAD DROPZONE CUSTOMIZATION */
     [data-testid="stFileUploaderDropzone"] {
-        background: rgba(0,0,0,.45) !important;
+        background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
-        border: 1px dashed rgba(56,189,248,.6) !important;
+        border: 1px dashed rgba(56, 189, 248, 0.6) !important;
         border-radius: 20px !important;
-        min-height: 80px;
+        padding: 15px !important;
     }
 
-    /* Collapse default text block containing '200MB per file • PDF' */
+    /* Force the upload box content area into a row alignment */
     [data-testid="stFileUploaderDropzone"] section {
-        font-size: 0 !important;
         display: flex !important;
-        justify-content: center !important;
+        flex-direction: row !important;
         align-items: center !important;
+        justify-content: center !important;
     }
 
-    /* Retain size on internal action buttons */
+    /* OBLITERATE THE DEFAULT TEXT LABELS AND THE 200MB NOTICE */
+    [data-testid="stFileUploadDropzoneInstructions"],
+    [data-testid="stFileUploaderInstruction"],
+    [data-testid="stFileUploaderDropzone"] small,
+    [data-testid="stFileUploaderDropzone"] section > div {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* EXPLICITLY KEEP THE BROWSE FILES BUTTON VISIBLE */
+    [data-testid="stFileUploaderDropzone"] button {
+        display: inline-flex !important;
+    }
     [data-testid="stFileUploaderDropzone"] button * {
-        font-size: 14px !important;
+        display: inline-block !important;
     }
 
-    /* Append target replacement string safely alongside the selector framework */
+    /* INJECT THE CUSTOM COMPACT SPECIFICATION TEXT NEXT TO THE BUTTON */
     [data-testid="stFileUploaderDropzone"] section::after {
         content: "Drag and drop PDF file here" !important;
         font-family: 'Inter', sans-serif !important;
-        font-size: 16px !important;
+        font-size: 15px !important;
         color: #38BDF8 !important;
         font-weight: 500 !important;
         margin-left: 15px !important;
         display: inline-block !important;
-        vertical-align: middle !important;
     }
     </style>
 """, unsafe_allow_html=True)
