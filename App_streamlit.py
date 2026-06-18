@@ -162,36 +162,42 @@ st.markdown("""
         justify-content: center !important;
     }
 
-    /* OBLITERATE THE DEFAULT TEXT LABELS AND THE 200MB NOTICE */
-    [data-testid="stFileUploadDropzoneInstructions"],
-    [data-testid="stFileUploaderInstruction"],
-    [data-testid="stFileUploaderDropzone"] small,
-    [data-testid="stFileUploaderDropzone"] section > div {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
+    /* 3. BULLETPROOF FILE UPLOADER OVERRIDE FOR STREAMLIT CLOUD */
+    [data-testid="stFileUploaderDropzone"] {
+        background: rgba(0, 0, 0, 0.45) !important;
+        backdrop-filter: blur(8px);
+        border: 1px dashed rgba(56, 189, 248, 0.6) !important;
+        border-radius: 20px !important;
+        padding: 25px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
-    /* EXPLICITLY KEEP THE BROWSE FILES BUTTON VISIBLE */
-    [data-testid="stFileUploaderDropzone"] button {
-        display: inline-flex !important;
+    /* Step A: Make ALL default text strings (including the 200MB limit notice) completely invisible */
+    [data-testid="stFileUploaderDropzone"] * {
+        color: transparent !important;
+        font-size: 0 !important;
     }
+
+    /* Step B: Explicitly protect and restore the "Browse files" button text size and visibility */
+    [data-testid="stFileUploaderDropzone"] button,
     [data-testid="stFileUploaderDropzone"] button * {
-        display: inline-block !important;
+        color: #ffffff !important;
+        font-size: 14px !important;
     }
 
-    /* INJECT THE CUSTOM COMPACT SPECIFICATION TEXT NEXT TO THE BUTTON */
-    [data-testid="stFileUploaderDropzone"] section::after {
+    /* Step C: Securely inject your exact custom instruction string directly beneath the button */
+    [data-testid="stFileUploaderDropzone"]::after {
         content: "Drag and drop PDF file here" !important;
         font-family: 'Inter', sans-serif !important;
-        font-size: 15px !important;
+        font-size: 16px !important;
         color: #38BDF8 !important;
         font-weight: 500 !important;
-        margin-left: 15px !important;
-        display: inline-block !important;
+        margin-top: 14px !important;
+        display: block !important;
+        visibility: visible !important;
     }
     </style>
 """, unsafe_allow_html=True)
