@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Premium Enterprise Light Gray UI Theme Styling
+# Premium Enterprise Glassmorphism UI Theme Styling
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -20,72 +20,74 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 1. FORCE MAIN AREA BACKGROUND: Clean Professional Light Gray */
-    [data-testid="stMain"],
-    [data-testid="stAppViewContainer"] {
-        background: #F4F6F9 !important;
-        background-image: none !important;
+    /* 1. APPLY BACKGROUND IMAGE TO MAIN DASHBOARD ONLY */
+    [data-testid="stMain"] {
+        background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
     }
 
-    /* Keep internal structural blocks transparent to uncover the gray background */
+    /* Keep outer container base neutral/transparent so main image functions correctly */
+    [data-testid="stAppViewContainer"] {
+        background: transparent !important;
+    }
+
+    /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
+    [data-testid="stSidebar"] {
+        background-color: #07111F !important;
+        border-right: 1px solid rgba(255,255,255,.08) !important;
+    }
+
+    /* Keep inner main container blocks transparent */
     [data-testid="stAppViewBlockContainer"],
     .block-container {
         background: transparent !important;
     }
-
-    /* 2. PREMIUM SOLID DARK SIDEBAR (Creates excellent visual structure) */
-    [data-testid="stSidebar"] {
-        background: #07111F !important;
-        background-color: #07111F !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-    }
-
-    /* Keep sidebar text configurations white and highly visible */
-    [data-testid="stSidebar"] p, 
-    [data-testid="stSidebar"] span, 
-    [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] div,
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3 {
-        color: #FFFFFF !important;
-    }
     
-    /* 3. TYPOGRAPHY CONTRAST FOR LIGHT BACKGROUND MAIN PANELS */
-    h1, h2, h3, h4, h5, h6, p, label, span { 
+    h1, h2, h3, h4, h5, h6, p, label { 
         font-family: 'Inter', sans-serif !important; 
     }
     
-    [data-testid="stMain"] h1,
-    [data-testid="stMain"] h2,
-    [data-testid="stMain"] h3,
-    [data-testid="stMain"] h4,
-    [data-testid="stMain"] p,
-    [data-testid="stMain"] label,
-    [data-testid="stMain"] small {
-        color: #1E293B !important; /* Deep dark slate for maximum legibility */
-    }
-
-    /* Title Styling Adjustment */
+    /* Title Fix */
     [data-testid="stMain"] h1 {
         font-weight: 700 !important;
         letter-spacing: -0.025em !important;
         margin-bottom: 20px !important;
+        color: var(--text-color) !important;
+    }
+
+    h1 span.gradient-title {
+        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        display: inline-block !important;
+    }
+
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] span, 
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] div {
+        color: var(--text-color) !important;
     }
     
-    /* 4. CRISP WHITE CARDS WITH ELEGANT SHADOWS */
+    /* Glassmorphism Cards */
     .report-card {
-        background: #FFFFFF !important;
+        background: color-mix(in srgb, var(--background-color) 75%, transparent) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         padding: 30px;
         border-radius: 16px;
-        border: 1px solid #E2E8F0;
-        color: #334155 !important;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        color: var(--text-color) !important;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
         line-height: 1.8;
     }
     
     .report-card h1, .report-card h2, .report-card h3 {
-        color: #0284C7 !important; /* Professional Sky Blue headings inside reports */
+        color: #38BDF8 !important;
         -webkit-text-fill-color: initial !important;
         background: none !important;
         font-weight: 600 !important;
@@ -97,12 +99,11 @@ st.markdown("""
     .report-card h2 { font-size: 22px !important; }
     .report-card h3 { font-size: 19px !important; }
     
-    /* 5. FLOW STEP CONTAINER ADJUSTMENTS */
     .flow-step-container {
-        background: #FFFFFF !important;
-        border: 1px solid #E2E8F0;
+        background: color-mix(in srgb, var(--secondary-background-color) 80%, transparent) !important;
+        border: 1px solid rgba(56, 189, 248, 0.25);
         border-radius: 14px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease, border-color 0.2s ease;
         margin: 0 auto;
         max-width: 900px;
@@ -110,83 +111,100 @@ st.markdown("""
     }
     
     .flow-step-container:hover {
-        border-color: #38BDF8;
+        border-color: rgba(56, 189, 248, 0.5);
         transform: translateY(-2px);
     }
     
     .flow-step-header {
         background: rgba(56, 189, 248, 0.1);
-        color: #0369A1;
+        color: #38BDF8;
         padding: 16px 24px;
         font-size: 20px;
         font-weight: 600;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         text-align: center;
     }
     
     .flow-step-body {
-        color: #475569;
+        color: var(--text-color);
+        opacity: 0.85;
         padding: 24px;
         font-size: 16px;
     }
     
-    /* Inputs, Selection drop-downs, Text areas UI alignment */
     div[data-baseweb="select"] > div {
-        background-color: #FFFFFF !important;
-        border-color: #CBD5E1 !important;
-        color: #1E293B !important;
+        background-color: var(--secondary-background-color) !important;
+        border-color: rgba(148, 163, 184, 0.2) !important;
+        color: var(--text-color) !important;
     }
     
     .stTextArea textarea {
-        background-color: #FFFFFF !important;
-        border: 1px solid #CBD5E1 !important;
-        color: #1E293B !important;
+        background-color: var(--background-color) !important;
+        border: 1px solid rgba(148, 163, 184, 0.2) !important;
+        color: var(--text-color) !important;
         border-radius: 10px !important;
     }
     
-    /* 6. ULTRA-COMPACT SLEEK HORIZONTAL FILE UPLOADER WITH FIXED LABELS */
+    /* 3. FILE UPLOAD DROPZONE CUSTOMIZATION */
     [data-testid="stFileUploaderDropzone"] {
-        background: #FFFFFF !important;
-        border: 1px dashed #38BDF8 !important;
-        border-radius: 12px !important;
-        padding: 8px 20px !important;
-        min-height: 0px !important;
+        background: rgba(0, 0, 0, 0.45) !important;
+        backdrop-filter: blur(8px);
+        border: 1px dashed rgba(56, 189, 248, 0.6) !important;
+        border-radius: 20px !important;
+        padding: 15px !important;
+    }
+
+    /* Force the upload box content area into a row alignment */
+    [data-testid="stFileUploaderDropzone"] section {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* 3. ULTRA-COMPACT SLIM FILE UPLOADER FOR STREAMLIT CLOUD */
+    [data-testid="stFileUploaderDropzone"] {
+        background: rgba(0, 0, 0, 0.45) !important;
+        backdrop-filter: blur(8px);
+        border: 1px dashed rgba(56, 189, 248, 0.6) !important;
+        border-radius: 12px !important;   /* Sleeker rounded corners for a thin box */
+        padding: 8px 20px !important;      /* Drastically reduced top/bottom padding */
+        min-height: 0px !important;        /* Overrides Streamlit's tall default height */
         height: auto !important;
+        
+        /* Switch to horizontal alignment to save vertical space */
         display: flex !important;
         flex-direction: row !important;    
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
 
-    /* Wipeout original labels & size restrictions securely */
+    /* Hide default text strings and notices */
     [data-testid="stFileUploaderDropzone"] * {
         color: transparent !important;
         font-size: 0 !important;
     }
 
-    /* Retain and re-style the "Browse files" interaction button */
+    /* Restore and scale down the "Browse files" button */
     [data-testid="stFileUploaderDropzone"] button {
         margin: 0 !important;
-        padding: 6px 14px !important;
-        background-color: #0F172A !important; /* Deep modern dark button */
-        border-radius: 6px !important;
-        border: none !important;
+        padding: 4px 12px !important;      /* Makes the button slightly shorter */
     }
     [data-testid="stFileUploaderDropzone"] button,
     [data-testid="stFileUploaderDropzone"] button * {
-        color: #FFFFFF !important;
-        font-size: 13px !important;
+        color: #ffffff !important;
+        font-size: 13px !important;        /* Slightly smaller text for a slim design */
     }
 
-    /* Append your tailored instructional string directly next to the action item */
+    /* Append your custom text cleanly directly next to the button */
     [data-testid="stFileUploaderDropzone"]::after {
         content: "Drag and drop PDF file here" !important;
         font-family: 'Inter', sans-serif !important;
         font-size: 14px !important;
-        color: #0284C7 !important;
+        color: #38BDF8 !important;
         font-weight: 500 !important;
-        margin-left: 15px !important;
+        margin-top: 0px !important;        /* Clears downward stacking push */
+        margin-left: 15px !important;      /* Pushes the text safely to the right of the button */
         display: inline-block !important;
         visibility: visible !important;
     }
