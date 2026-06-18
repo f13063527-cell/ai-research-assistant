@@ -166,7 +166,7 @@ st.markdown("""
     [data-testid="stFileUploaderDropzone"] {
         background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
-        border: 1px dashed rgba(56, 189, 248, 0.6) !important;
+        border: 1px dashed rgba(56, 189, 248, 0.3) !important;
         border-radius: 20px !important;
         padding: 25px !important;
         display: flex !important;
