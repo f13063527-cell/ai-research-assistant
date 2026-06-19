@@ -21,12 +21,22 @@ st.markdown("""
     }
     
     /* 1. APPLY BACKGROUND IMAGE TO MAIN DASHBOARD ONLY */
-    [data-testid="stMain"] {
-        background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-attachment: fixed !important;
+    /* 1. FORCE MAIN AREA BACKGROUND: Applies to the main app view */
+    .stApp {
+        background: #F4F6F9 !important;  /* Forces clean light gray across the application */
+    }
+    [data-testid="stAppViewContainer"] {
+        background: transparent !important;
+    }
+
+    /* Fix text visibility so white text does not disappear on light gray background */
+    [data-testid="stMain"] p, 
+    [data-testid="stMain"] label,
+    [data-testid="stMain"] h1,
+    [data-testid="stMain"] h2,
+    [data-testid="stMain"] h3,
+    [data-testid="stMain"] span {
+        color: #1E293B !important;      /* Changes text in the main body to dark slate gray */
     }
 
     /* Keep outer container base neutral/transparent so main image functions correctly */
