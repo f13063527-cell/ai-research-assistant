@@ -221,7 +221,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "https://research-paper-api-8ei1.onrender.com"
 
 # Sync global tracking states
 for key, default in [
