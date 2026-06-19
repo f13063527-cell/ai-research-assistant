@@ -36,7 +36,14 @@ st.markdown("""
     background: #F4F6F9 !important; /* Elegant light gray color */
     background-image: none !important; /* Removes the dark background image link */
 }
-
+/* Forces main panel text to be dark slate gray for readability */
+[data-testid="stMain"] p, 
+[data-testid="stMain"] h1, 
+[data-testid="stMain"] h2, 
+[data-testid="stMain"] h3, 
+[data-testid="stMain"] label {
+    color: #1E293B !important;
+}
     /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
     [data-testid="stSidebar"] {
         background-color: #07111F !important;
