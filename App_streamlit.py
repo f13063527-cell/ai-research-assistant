@@ -16,12 +16,8 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
-    html, body {
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* 1. APPLY BACKGROUND IMAGE TO MAIN DASHBOARD ONLY */
-    [data-testid="stMain"] {
+    /* 1. GLOBAL BACKGROUND: Applied to the root container */
+    [data-testid="stAppViewContainer"] {
         background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
                     url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
         background-size: cover !important;
@@ -29,184 +25,52 @@ st.markdown("""
         background-attachment: fixed !important;
     }
 
-    /* Keep outer container base neutral/transparent so main image functions correctly */
-    [data-testid="stAppViewContainer"] {
-        background: transparent !important;
-    }
-
-    /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
+    /* 2. SIDEBAR STYLING */
     [data-testid="stSidebar"] {
         background-color: #07111F !important;
-        border-right: 1px solid rgba(255,255,255,.08) !important;
     }
 
-    /* Keep inner main container blocks transparent */
-    [data-testid="stAppViewBlockContainer"],
-    .block-container {
-        background: transparent !important;
-    }
-    
-    h1, h2, h3, h4, h5, h6, p, label { 
-        font-family: 'Inter', sans-serif !important; 
-    }
-    
-    /* Title Fix */
-    [data-testid="stMain"] h1 {
-        font-weight: 700 !important;
-        letter-spacing: -0.025em !important;
-        margin-bottom: 20px !important;
-        color: var(--text-color) !important;
-    }
-
-    h1 span.gradient-title {
-        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-        display: inline-block !important;
-    }
-
-    [data-testid="stSidebar"] p, 
-    [data-testid="stSidebar"] span, 
-    [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] div {
-        color: var(--text-color) !important;
-    }
-    
-    /* Glassmorphism Cards */
-    .report-card {
-        background: color-mix(in srgb, var(--background-color) 75%, transparent) !important;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        padding: 30px;
-        border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        color: var(--text-color) !important;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
-        line-height: 1.8;
-    }
-    
-    .report-card h1, .report-card h2, .report-card h3 {
-        color: #38BDF8 !important;
-        -webkit-text-fill-color: initial !important;
-        background: none !important;
-        font-weight: 600 !important;
-        margin-top: 24px !important;
-        margin-bottom: 12px !important;
-    }
-    
-    .report-card h1 { font-size: 26px !important; }
-    .report-card h2 { font-size: 22px !important; }
-    .report-card h3 { font-size: 19px !important; }
-    
-    .flow-step-container {
-        background: color-mix(in srgb, var(--secondary-background-color) 80%, transparent) !important;
-        border: 1px solid rgba(56, 189, 248, 0.25);
-        border-radius: 14px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease, border-color 0.2s ease;
-        margin: 0 auto;
-        max-width: 900px;
-        overflow: hidden;
-    }
-    
-    .flow-step-container:hover {
-        border-color: rgba(56, 189, 248, 0.5);
-        transform: translateY(-2px);
-    }
-    
-    .flow-step-header {
-        background: rgba(56, 189, 248, 0.1);
-        color: #38BDF8;
-        padding: 16px 24px;
-        font-size: 20px;
-        font-weight: 600;
-        border-bottom: 1px solid rgba(56, 189, 248, 0.15);
-        text-align: center;
-    }
-    
-    .flow-step-body {
-        color: var(--text-color);
-        opacity: 0.85;
-        padding: 24px;
-        font-size: 16px;
-    }
-    
-    div[data-baseweb="select"] > div {
-        background-color: var(--secondary-background-color) !important;
-        border-color: rgba(148, 163, 184, 0.2) !important;
-        color: var(--text-color) !important;
-    }
-    
-    .stTextArea textarea {
-        background-color: var(--background-color) !important;
-        border: 1px solid rgba(148, 163, 184, 0.2) !important;
-        color: var(--text-color) !important;
-        border-radius: 10px !important;
-    }
-    
-    /* 3. FILE UPLOAD DROPZONE CUSTOMIZATION */
+    /* 3. DYNAMIC UPLOADER BUTTON: Fixes visibility in light/dark mode */
     [data-testid="stFileUploaderDropzone"] {
         background: rgba(0, 0, 0, 0.45) !important;
         backdrop-filter: blur(8px);
         border: 1px dashed rgba(56, 189, 248, 0.6) !important;
-        border-radius: 20px !important;
-        padding: 15px !important;
-    }
-
-    /* Force the upload box content area into a row alignment */
-    [data-testid="stFileUploaderDropzone"] section {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    /* 3. ULTRA-COMPACT SLIM FILE UPLOADER FOR STREAMLIT CLOUD */
-    [data-testid="stFileUploaderDropzone"] {
-        background: rgba(0, 0, 0, 0.45) !important;
-        backdrop-filter: blur(8px);
-        border: 1px dashed rgba(56, 189, 248, 0.6) !important;
-        border-radius: 12px !important;   /* Sleeker rounded corners for a thin box */
-        padding: 8px 20px !important;      /* Drastically reduced top/bottom padding */
-        min-height: 0px !important;        /* Overrides Streamlit's tall default height */
-        height: auto !important;
-        
-        /* Switch to horizontal alignment to save vertical space */
+        border-radius: 12px !important;
+        padding: 8px 20px !important;
         display: flex !important;
         flex-direction: row !important;    
         align-items: center !important;
         justify-content: center !important;
     }
 
-    /* Hide default text strings and notices */
-    [data-testid="stFileUploaderDropzone"] * {
-        color: transparent !important;
-        font-size: 0 !important;
-    }
-
-    /* Restore and scale down the "Browse files" button */
-    [data-testid="stFileUploaderDropzone"] button {
-        margin: 0 !important;
-        padding: 4px 12px !important;      /* Makes the button slightly shorter */
-    }
+    /* Force button and text to be visible regardless of theme */
     [data-testid="stFileUploaderDropzone"] button,
     [data-testid="stFileUploaderDropzone"] button * {
-        color: #ffffff !important;
-        font-size: 13px !important;        /* Slightly smaller text for a slim design */
+        color: var(--text-color) !important; 
+        font-size: 13px !important;
+        background-color: rgba(56, 189, 248, 0.2) !important;
+        border: 1px solid #38BDF8 !important;
     }
 
-    /* Append your custom text cleanly directly next to the button */
     [data-testid="stFileUploaderDropzone"]::after {
         content: "Drag and drop PDF file here" !important;
         font-family: 'Inter', sans-serif !important;
         font-size: 14px !important;
         color: #38BDF8 !important;
         font-weight: 500 !important;
-        margin-top: 0px !important;        /* Clears downward stacking push */
-        margin-left: 15px !important;      /* Pushes the text safely to the right of the button */
+        margin-left: 15px !important;
         display: inline-block !important;
         visibility: visible !important;
+    }
+
+    /* Glassmorphism Cards */
+    .report-card {
+        background: color-mix(in srgb, var(--background-color) 75%, transparent) !important;
+        backdrop-filter: blur(12px);
+        padding: 30px;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        color: var(--text-color) !important;
     }
     </style>
 """, unsafe_allow_html=True)
