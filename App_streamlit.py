@@ -221,7 +221,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-BACKEND_URL = "https://research-paper-api-8ei1.onrender.com"
+BACKEND_URL = "https://o7tecog-research-paper-api.hf.space"
 
 # Sync global tracking states
 for key, default in [
