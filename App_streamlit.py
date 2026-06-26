@@ -75,7 +75,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "https://o7tecog-research-paper-api.hf.space"
 
 # Sync global tracking states
 for key, default in [
