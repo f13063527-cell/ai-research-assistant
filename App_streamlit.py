@@ -20,18 +20,13 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 1. APPLY BACKGROUND IMAGE TO MAIN DASHBOARD ONLY */
-    [data-testid="stMain"] {
+    /* 1. GLOBAL BACKGROUND: Applied to the root container */
+    [data-testid="stAppViewContainer"] {
         background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
                     url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
-    }
-
-    /* Keep outer container base neutral/transparent so main image functions correctly */
-    [data-testid="stAppViewContainer"] {
-        background: transparent !important;
     }
 
     /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
@@ -192,7 +187,7 @@ st.markdown("""
     }
     [data-testid="stFileUploaderDropzone"] button,
     [data-testid="stFileUploaderDropzone"] button * {
-        color: #ffffff !important;
+        color: var(--text-color) !important;
         font-size: 13px !important;        /* Slightly smaller text for a slim design */
     }
 
@@ -211,7 +206,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "https://o7tecog-research-paper-api.hf.space"
 
 # Sync global tracking states
 for key, default in [
