@@ -20,29 +20,7 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
 
-/* LIGHT MODE OVERRIDE: Light Blue Text */
-    @media (prefers-color-scheme: light) {
-        :root, [data-testid="stAppViewContainer"] {
-            --text-color: #38BDF8 !important; /* Light Blue */
-        }
-        /* Target general text elements */
-        p, span, div, label, li {
-            color: var(--text-color) !important;
-        }
-    }
 
-    /* DARK MODE OVERRIDE: Gray Text */
-    @media (prefers-color-scheme: dark) {
-        :root, [data-testid="stAppViewContainer"] {
-            --text-color: #94A3B8 !important; /* Slate Gray */
-        }
-        /* Target general text elements */
-        p, span, div, label, li {
-            color: var(--text-color) !important;
-        }
-    }
-
-    
     
     /* 1. GLOBAL BACKGROUND: Applied to the root container */
     [data-testid="stAppViewContainer"] {
