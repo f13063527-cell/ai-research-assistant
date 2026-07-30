@@ -20,12 +20,10 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-
-  
     /* 1. GLOBAL BACKGROUND: Applied to the root container */
     [data-testid="stAppViewContainer"] {
         background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHFukMgd0nc8FuoIow8gs-wEKlcVsjIBFIcsrLmrFZIw&s=10") !important;
+                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
@@ -56,7 +54,7 @@ st.markdown("""
     }
 
     h1 span.gradient-title {
-        background: linear-gradient(135deg, var(--text-color) 0%, #38BDF8 100%) !important;
+        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
@@ -123,7 +121,7 @@ st.markdown("""
     }
     
     .flow-step-body {
-        color: #38BDF8 !important;
+        color: var(--text-color);
         opacity: 0.85;
         padding: 24px;
         font-size: 16px;
