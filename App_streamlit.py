@@ -20,10 +20,11 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 1. GLOBAL BACKGROUND: Applied to the root container */
+    /* 1. GLOBAL BACKGROUND: Animated GIF */
     [data-testid="stAppViewContainer"] {
-        background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
-                    url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXHIiSJDlGl80GsWGNNbwNdQVYrjZOHgy2_rMwtz6j6g&s=10") !important;
+        /* The rgba() values add a dark overlay so your text stays readable */
+        background: linear-gradient(rgba(0,0,0,.60), rgba(0,0,0,.60)),
+                    url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDF5ZzR3M2V4aG1uYXF5a2Z4eW90bW56Z2MzZ3F2Z3F4bW56Z2MzZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TkmtTZZK11h6cE0/giphy.gif") !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
