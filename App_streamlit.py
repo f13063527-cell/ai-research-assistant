@@ -29,10 +29,10 @@ st.markdown("""
         background-attachment: fixed !important;
     }
 
-    /* 2. SOLID SIDEBAR BACKGROUND (NO IMAGE LEAK) */
+    /* 2. DYNAMIC SIDEBAR BACKGROUND */
     [data-testid="stSidebar"] {
-        background-color: #07111F !important;
-        border-right: 1px solid rgba(255,255,255,.08) !important;
+    background-color: var(--secondary-background-color) !important;
+    border-right: 1px solid rgba(148, 163, 184, 0.2) !important; 
     }
 
     /* Keep inner main container blocks transparent */
