@@ -77,7 +77,7 @@ st.markdown("""
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
         border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.2);
+        border: 1px solid rgba(148, 163, 184, 0.0);
         color: var(--text-color) !important;
         box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
         line-height: 1.8;
