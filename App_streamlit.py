@@ -20,27 +20,6 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-/* LIGHT MODE OVERRIDE: Light Blue Text */
-    @media (prefers-color-scheme: light) {
-        :root, [data-testid="stAppViewContainer"] {
-            --text-color: #38BDF8 !important; /* Light Blue */
-        }
-        /* Target general text elements */
-        p, span, div, label, li {
-            color: var(--text-color) !important;
-        }
-    }
-
-    /* DARK MODE OVERRIDE: Gray Text */
-    @media (prefers-color-scheme: dark) {
-        :root, [data-testid="stAppViewContainer"] {
-            --text-color: #94A3B8 !important; /* Slate Gray */
-        }
-        /* Target general text elements */
-        p, span, div, label, li {
-            color: var(--text-color) !important;
-        }
-    }
 
   
     /* 1. GLOBAL BACKGROUND: Applied to the root container */
@@ -77,7 +56,7 @@ st.markdown("""
     }
 
     h1 span.gradient-title {
-        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
+        background: linear-gradient(135deg, var(--text-color) 0%, #38BDF8 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
