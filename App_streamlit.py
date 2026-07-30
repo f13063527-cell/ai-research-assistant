@@ -51,6 +51,7 @@ st.markdown("""
         letter-spacing: -0.025em !important;
         margin-bottom: 20px !important;
         color: var(--text-color) !important;
+        text-align: center !important;
     }
 
     h1 span.gradient-title {
