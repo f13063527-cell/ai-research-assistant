@@ -23,7 +23,7 @@ st.markdown("""
     /* 1. GLOBAL BACKGROUND: Animated GIF */
     [data-testid="stAppViewContainer"] {
         /* The rgba() values add a dark overlay so your text stays readable */
-        background: linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.10)),
+        background: linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.30)),
                     url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGhjbWZxZ3ljdjZ4MnR6aGs4am16MGFnYmdvZ3N0ajZzaTRtMzA0eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKVQE9af7cbDyhy/giphy.gif") !important;
         background-size: cover !important;
         background-position: center !important;
