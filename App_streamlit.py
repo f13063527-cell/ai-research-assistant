@@ -123,7 +123,7 @@ st.markdown("""
     }
     
     .flow-step-body {
-        color: var(--text-color);
+        color: #38BDF8 !important;
         opacity: 0.85;
         padding: 24px;
         font-size: 16px;
