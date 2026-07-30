@@ -56,7 +56,7 @@ st.markdown("""
     }
 
     h1 span.gradient-title {
-        background: linear-gradient(135deg, var(--text-color) 0%, #0F172A 100%) !important;
+        background: linear-gradient(135deg, #0F172A 50%, #0F172A 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
