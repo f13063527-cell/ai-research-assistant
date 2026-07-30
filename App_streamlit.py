@@ -56,7 +56,7 @@ st.markdown("""
     }
 
     h1 span.gradient-title {
-        background: linear-gradient(135deg, #0F172A 50%, #0F172A 100%) !important;
+        background: linear-gradient(135deg, var(--text-color) 0%, #0F172A 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
@@ -72,7 +72,7 @@ st.markdown("""
     
     /* Glassmorphism Cards */
     .report-card {
-        background: color-mix(in srgb, var(--background-color) 85%, transparent) !important;
+        background: color-mix(in srgb, #0F172A 85%, transparent) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
