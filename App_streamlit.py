@@ -20,19 +20,14 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* 1. GLOBAL BACKGROUND: Smooth Animated Gradient */
+    /* 1. GLOBAL BACKGROUND: Animated GIF */
     [data-testid="stAppViewContainer"] {
-        background: linear-gradient(-45deg, #07111F, #0F172A, #0284C7, #0369A1) !important;
-        background-size: 400% 400% !important;
-        animation: gradientBG 15s ease infinite !important;
+        /* The rgba() values add a dark overlay so your text stays readable */
+        background: linear-gradient(rgba(0,0,0,.60), rgba(0,0,0,.60)),
+                    url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDF5ZzR3M2V4aG1uYXF5a2Z4eW90bW56Z2MzZ3F2Z3F4bW56Z2MzZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TkmtTZZK11h6cE0/giphy.gif") !important;
+        background-size: cover !important;
+        background-position: center !important;
         background-attachment: fixed !important;
-    }
-
-    /* Keyframes for the gradient animation */
-    @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
     }
 
     /* 2. DYNAMIC SIDEBAR BACKGROUND */
