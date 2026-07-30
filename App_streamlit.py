@@ -343,7 +343,7 @@ if st.session_state.current_view == "📝 Research Analyzer":
             page_count = len(pdf_document)
 
             if not (1 <= page_count <= 40):
-                st.error(f"❌ PDF has {page_count} pages. Only documents between 1 and 25 pages are allowed.")
+                st.error(f"❌ PDF has {page_count} pages. Only documents between 1 and 40 pages are allowed.")
                 st.stop()
             st.success(f"✅ PDF accepted ({page_count} pages)")
         
