@@ -24,7 +24,7 @@ st.markdown("""
     [data-testid="stAppViewContainer"] {
         /* The rgba() values add a dark overlay so your text stays readable */
         background: linear-gradient(rgba(0,0,0,.60), rgba(0,0,0,.60)),
-                    url("https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3eXVwbjRibW9rb3IzNHUzY2c4djNhbjlsZ2J4ZGJhanFwNnJqZGRmdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oEduSi2isGBb4WFRS/giphy.gif") !important;
+                    url("https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YmZ5Y3UwZ3FwbjVtdzE5cWdkaW5lNjN0YXk5eWI4cjI0OTU0Mzh4cSZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/VUqHXpSqDWTlc0Q7AG/giphy.gif") !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
