@@ -72,7 +72,7 @@ st.markdown("""
     
     /* Glassmorphism Cards */
     .report-card {
-        background: color-mix(in srgb, var(--background-color) 75%, transparent) !important;
+        background: color-mix(in srgb, var(--background-color) 15%, transparent) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
