@@ -19,8 +19,6 @@ st.markdown("""
     html, body {
         font-family: 'Inter', sans-serif;
     }
-
-
     
     /* 1. GLOBAL BACKGROUND: Applied to the root container */
     [data-testid="stAppViewContainer"] {
@@ -56,7 +54,7 @@ st.markdown("""
     }
 
     h1 span.gradient-title {
-        background: linear-gradient(135deg, #38BDF8 100%, #94A3B8 100%) !important;
+        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
