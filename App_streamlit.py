@@ -23,7 +23,7 @@ st.markdown("""
     /* 1. GLOBAL BACKGROUND: Animated GIF */
     [data-testid="stAppViewContainer"] {
         /* The rgba() values add a dark overlay so your text stays readable */
-        background: linear-gradient(rgba(0,0,0,.60), rgba(0,0,0,.60)),
+        background: linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.10)),
                     url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGhjbWZxZ3ljdjZ4MnR6aGs4am16MGFnYmdvZ3N0ajZzaTRtMzA0eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKVQE9af7cbDyhy/giphy.gif") !important;
         background-size: cover !important;
         background-position: center !important;
@@ -72,7 +72,7 @@ st.markdown("""
     
     /* Glassmorphism Cards */
     .report-card {
-        background: color-mix(in srgb, #0F172A 85%, transparent) !important;
+        background: color-mix(in srgb, var(--text-color) 85%, transparent) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
