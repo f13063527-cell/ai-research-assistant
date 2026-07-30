@@ -56,7 +56,7 @@ st.markdown("""
     }
 
     h1 span.gradient-title {
-        background: linear-gradient(135deg, var(--text-color) 0%, #94A3B8 100%) !important;
+        background: linear-gradient(135deg, var(--text-color) 0%, #0F172A 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
@@ -72,12 +72,12 @@ st.markdown("""
     
     /* Glassmorphism Cards */
     .report-card {
-        background: color-mix(in srgb, var(--background-color) 15%, transparent) !important;
+        background: color-mix(in srgb, var(--background-color) 85%, transparent) !important;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 30px;
         border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.0);
+        border: 1px solid rgba(148, 163, 184, 0.8);
         color: var(--text-color) !important;
         box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
         line-height: 1.8;
