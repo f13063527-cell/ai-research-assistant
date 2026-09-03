@@ -212,10 +212,17 @@ BACKEND_URL = "https://o7tecog-research-paper-api.hf.space"
 
 # Sync global tracking states
 for key, default in [
-    ("summary", None), ("pdf_content", None), ("flowchart_bytes", None),
-    ("messages", []), ("current_view", "📝 Research Analyzer"), ("filename", ""),
-    ("uploaded_pdf_text", ""), ("selected_section_text", ""), ("selected_section_name", ""),
-    ("analyzer_steps", [])
+    ("summary", None),
+    ("pdf_content", None),
+    ("flowchart_bytes", None),
+    ("messages", []),
+    ("current_view", "📝 Research Analyzer"),
+    ("filename", ""),
+    ("uploaded_pdf_text", ""),
+    ("selected_section_text", ""),
+    ("selected_section_name", ""),
+    ("analyzer_steps", []),
+    ("diagram_generated", False)
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -238,6 +245,63 @@ def clean_pdf_text(text):
     text = re.sub(r'ISSN\s*\d+\-\d+', '', text, flags=re.IGNORECASE)
     text = re.sub(r'(?m)^\s*\d+\s*$', '', text)
     return text.strip()
+    
+def clean_ai_output(text: str) -> str:
+    if not text:
+        return ""
+
+    import html
+
+    # Decode HTML entities
+    text = html.unescape(text)
+
+    # Remove unwanted HTML/XML tags
+    text = re.sub(
+        r"</?(?:para|br|div|span|p|section|article)[^>]*>",
+        "",
+        text,
+        flags=re.IGNORECASE
+    )
+
+    # Remove code fences
+    text = re.sub(
+        r"```(?:markdown|md|text)?",
+        "",
+        text,
+        flags=re.IGNORECASE
+    )
+    text = text.replace("```", "")
+
+    # Remove thinking/reasoning headings
+    text = re.sub(
+        r"(?im)^\s*(thinking process|analysis|reasoning|chain of thought)\s*:?\s*$",
+        "",
+        text
+    )
+
+    # Remove common introductory phrases
+    text = re.sub(
+        r"(?im)^\s*(here'?s|here is)\s+(the\s+)?(final answer|answer|analysis)\s*:?\s*",
+        "",
+        text
+    )
+
+    # Normalize bullet symbols
+    text = text.replace("•", "-")
+    text = text.replace("●", "-")
+
+    # Fix escaped newlines/tabs
+    text = text.replace("\\n", "\n")
+    text = text.replace("\\t", " ")
+
+    # Remove excessive spaces
+    text = re.sub(r"[ \t]+", " ", text)
+
+    # Keep maximum two blank lines
+    text = re.sub(r"\n{3,}", "\n\n", text)
+
+    return text.strip()
+
 
 def extract_section(text, section_name):
     text = clean_pdf_text(text)
@@ -317,10 +381,10 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
             report_res = requests.get(f"{BACKEND_URL}{download_url}")
             if report_res.status_code == 200:
                 pdf_bytes = report_res.content
-
+        analyzer_steps = data.get("analyzer_steps", [])
         return summary, flowchart_bytes, pdf_bytes, ""
     except Exception as e:
-        return None, None, None, f"Network Connectivity Fault: {str(e)}"
+        return None, None, None,[], f"Network Connectivity Fault: {str(e)}"
 
 # ======================================================
 # VIEWS
@@ -356,15 +420,21 @@ if st.session_state.current_view == "📝 Research Analyzer":
             if st.button("Analyze PDF Structure", type="primary", use_container_width=True):
                 with st.spinner("Analyzing structures, compiling operational vectors and generating canvas matrices..."):
                     st.session_state.uploaded_pdf_text = raw_extracted_text
-                    st.session_state.analyzer_steps = []  
-                    summary, flow_bytes, report_bytes, err = process_content(file_name=uploaded_file.name, file_bytes=pdf_bytes)
+                    summary, flow_bytes, report_bytes, analyzer_steps, err = process_content(
+                        file_name=uploaded_file.name,
+                        file_bytes=pdf_bytes
+                    )
+
                     if err:
                         st.error(err)
                     else:
+                        summary = clean_ai_output(summary)
+
                         st.session_state.summary = summary
                         st.session_state.flowchart_bytes = flow_bytes
                         st.session_state.pdf_content = report_bytes
                         st.session_state.filename = uploaded_file.name
+                        st.session_state.analyzer_steps = analyzer_steps
                         st.rerun()
 
     with tab2:
@@ -372,14 +442,20 @@ if st.session_state.current_view == "📝 Research Analyzer":
         if user_text and st.button("Compile Text Matrix", type="primary"):
             with st.spinner("Processing framework steps..."):
                 st.session_state.analyzer_steps = []  
-                summary, flow_bytes, report_bytes, err = process_content(raw_text=user_text)
-                if err: 
+                summary, flow_bytes, report_bytes,analyzer_steps, err = process_content(
+                    raw_text=user_text
+                )
+
+                if err:
                     st.error(err)
                 else:
+                    summary = clean_ai_output(summary)
+
                     st.session_state.summary = summary
                     st.session_state.flowchart_bytes = flow_bytes
                     st.session_state.pdf_content = report_bytes
                     st.session_state.filename = "Text_Payload.pdf"
+                    st.session_state.analyzer_steps = analyzer_steps
                     st.rerun()
 
     if st.session_state.summary:
@@ -388,7 +464,7 @@ if st.session_state.current_view == "📝 Research Analyzer":
         
         # 1. Summarization View Block
         st.markdown("### 📝 Executive Analysis Summary")
-        st.markdown(f'<div class="report-card">\n\n{st.session_state.summary}\n\n</div>', unsafe_allow_html=True)
+        st.markdown(st.session_state.summary)
         
         st.write("")
         st.write("")
@@ -397,14 +473,7 @@ if st.session_state.current_view == "📝 Research Analyzer":
         st.markdown("### 🗺️ Derived Research Process Workflow")
         st.caption("This responsive diagram outlines the core headlines and sequential milestones extracted from the PDF context.")
         
-        if not st.session_state.analyzer_steps:
-            st.session_state.analyzer_steps = [
-                {"title": "1. Study Conceptualization", "desc": "The foundational problem statement and primary research targets are isolated directly from the document introduction headers."},
-                {"title": "2. Literature Review", "desc": "The specific datasets, baseline criteria, and raw structural inputs compiled for the practical experiment stages."},
-                {"title": "3. Data Collection", "desc": "The step-by-step algorithms, mathematical proofs, or implementation procedures deployed by the research authors."},
-                {"title": "4. Data Analysis & Validation", "desc": "The performance checking stage where findings are verified against control metrics and standard industry baselines."},
-                {"title": "5. Conclusion & Future Work", "desc": "The ultimate takeaway and operational real-world impacts derived from the document findings."}
-            ]
+        
 
         # Render step badges (Headlines Only)
         for i, step in enumerate(st.session_state.analyzer_steps):
@@ -474,7 +543,7 @@ elif st.session_state.current_view == "🤖 AI Chat Agent":
 
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+                st.markdown(clean_ai_output(message["content"]))
 
         if st.session_state.scroll_to_bottom:
             st.components.v1.html(
@@ -512,10 +581,11 @@ elif st.session_state.current_view == "🤖 AI Chat Agent":
                     data={"question": prompt},
                     timeout=300
                 )
+                response.raise_for_status()
                 raw_data = response.json()
                 if isinstance(raw_data, dict):
                     if "answer" in raw_data:
-                        answer = raw_data["answer"]
+                        answer = clean_ai_output(raw_data["answer"])
                     elif "error" in raw_data:
                         answer = f"⚠️ {raw_data['error']}"
                     else:
@@ -574,7 +644,8 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
             else:
                 with st.spinner("Extracting unique research process milestones from your document..."):
                     try:
-                        response = requests.post(f"{BACKEND_URL}/generate-flowchart")
+                        response = requests.post(f"{BACKEND_URL}/generate-flowchart" ,timeout=300)
+                        response.raise_for_status()
                         raw_data = response.json()
                         if "error" in raw_data:
                             st.error(raw_data["error"])
