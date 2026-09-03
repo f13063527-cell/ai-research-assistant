@@ -377,11 +377,15 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
                 timeout=60
             )
 
-        if img_res.status_code == 200:
-            flowchart_bytes = img_res.content
+            if img_res.status_code == 200:
+                flowchart_bytes = bytes(img_res.content)
+            else:
+                flowchart_bytes = None    
         else:
             flowchart_bytes = None
-
+        if not isinstance(flowchart_bytes, bytes):
+            flowchart_bytes = None
+            
         download_url = data.get("download_url")
         if download_url:
             report_res = requests.get(f"{BACKEND_URL}{download_url}")
@@ -669,11 +673,28 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
         st.write("")
         st.write("")
         
-        if st.session_state.flowchart_bytes:
+        if st.session_state.flowchart_bytes is not None:
             c_img1, c_img2, c_img3 = st.columns([1, 2, 1])
+
             with c_img2:
-                st.markdown("<h4 style='text-align: center; color: #38BDF8;'>Visual Process Flowchart</h4>", unsafe_allow_html=True)
-                st.image(st.session_state.flowchart_bytes, use_container_width=True)
+                st.markdown(
+                    "<h4 style='text-align: center; color: #38BDF8;'>Visual Process Flowchart</h4>",
+                    unsafe_allow_html=True
+                )
+
+                flowchart_data = st.session_state.flowchart_bytes
+
+                # Make sure Streamlit receives actual image bytes
+                if isinstance(flowchart_data, bytes):
+                    st.image(flowchart_data, use_container_width=True)
+
+                elif isinstance(flowchart_data, str):
+                    st.image(flowchart_data, use_container_width=True)
+
+                else:
+                    st.warning(
+                        f"Flowchart image has invalid data type: {type(flowchart_data).__name__}"
+                )
                 st.write("")
 
         if st.session_state.analyzer_steps:
