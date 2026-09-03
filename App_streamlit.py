@@ -363,7 +363,7 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
         data = response.json()
         
         if "error" in data:
-            return None, None, None, data["error"]
+            return None, None, None, [], data["error"]
             
         summary = data.get("summary")
         flowchart_url = data.get("flowchart_url")
@@ -372,9 +372,15 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
         flowchart_bytes = None
         
         if flowchart_url:
-            img_res = requests.get(f"{BACKEND_URL}{flowchart_url}")
-            if img_res.status_code == 200:
-                flowchart_bytes = img_res.content
+            img_res = requests.get(
+                f"{BACKEND_URL}{flowchart_url}",
+                timeout=60
+            )
+
+        if img_res.status_code == 200:
+            flowchart_bytes = img_res.content
+        else:
+            flowchart_bytes = None
 
         download_url = data.get("download_url")
         if download_url:
@@ -384,7 +390,7 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
         analyzer_steps = data.get("analyzer_steps", [])
         return summary, flowchart_bytes,analyzer_steps, pdf_bytes, ""
     except Exception as e:
-        return None, None, None,[], f"Network Connectivity Fault: {str(e)}"
+        return None, None, None, [], f"Network Connectivity Fault: {str(e)}"
 
 # ======================================================
 # VIEWS
@@ -477,6 +483,10 @@ if st.session_state.current_view == "📝 Research Analyzer":
 
         # Render step badges (Headlines Only)
         for i, step in enumerate(st.session_state.analyzer_steps):
+            if not isinstance(step, dict):
+                continue
+
+            title = step.get("title", f"Step {i+1}")
             c1, card_col, c3 = st.columns([0.5, 5, 0.5])
             with card_col:
                 st.markdown(f"""
@@ -498,7 +508,7 @@ if st.session_state.current_view == "📝 Research Analyzer":
                             font-weight: 600;
                             letter-spacing: -0.01em;
                         ">
-                            {step['title']}
+                            {title}
                         </div>
                     </div>
                 """, unsafe_allow_html=True)
@@ -669,15 +679,20 @@ elif st.session_state.current_view == "📊 Research Flow Diagram":
         if st.session_state.analyzer_steps:
             st.markdown("<h4 style='text-align: center; color: #38BDF8; margin-bottom: 20px;'>Core Milestone Breakdown</h4>", unsafe_allow_html=True)
             for i, step in enumerate(st.session_state.analyzer_steps):
+                if not isinstance(step, dict):
+                    continue
+
+                title = step.get("title", f"Step {i+1}")
+                desc = step.get("desc", "")
                 c1, card_col, c3 = st.columns([0.5, 5, 0.5])
                 with card_col:
                     st.markdown(f"""
                         <div class="flow-step-container">
                             <div class="flow-step-header">
-                                {step['title']}
+                                {title}
                             </div>
                             <div class="flow-step-body">
-                                {step['desc']}
+                                {desc}
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
