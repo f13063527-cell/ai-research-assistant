@@ -382,7 +382,7 @@ def process_content(file_name: Optional[str] = None, file_bytes: Optional[bytes]
             if report_res.status_code == 200:
                 pdf_bytes = report_res.content
         analyzer_steps = data.get("analyzer_steps", [])
-        return summary, flowchart_bytes, pdf_bytes, ""
+        return summary, flowchart_bytes,analyzer_steps, pdf_bytes, ""
     except Exception as e:
         return None, None, None,[], f"Network Connectivity Fault: {str(e)}"
 
